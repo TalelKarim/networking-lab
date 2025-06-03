@@ -1,0 +1,13 @@
+.zip*
+!/.terraform.lock.hcl
+# Local .terraform directories
+**/.terraform/*
+# .tfstate files
+*.tfstate
+*.tfstate.*
+.DS_Store
+!/.gitignore
+.vscode
+plan
+terraform.local.auto.tfvars
+terraform.auto.tfvars
