@@ -45,3 +45,9 @@ variable "enable_nat_gateway" {
   type    = bool
   default = false
 }
+
+variable "role" {
+  type    = string
+  default = "vpc"
+
+}
