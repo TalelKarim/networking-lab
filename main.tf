@@ -1,5 +1,5 @@
-module "network" {
-  source = "./network"
+module "main" {
+  source = "./main"
 }
 
 
