@@ -7,7 +7,7 @@ terraform {
     region = "eu-west-1"
     # Chemin “clé” où Terraform écrira le state, 
     # par exemple “networking-lab/terraform.tfstate”
-    key = "networking-lab/terraform.tfstate"
+    key = "terraform.tfstate"
 
     # (Optionnel, mais fortement recommandé) table DynamoDB pour le locking
     dynamodb_table = "terraform-locks"
