@@ -1,1 +1,1 @@
-general_instance_type = "t3.medium"
+general_instance_type = "t2.micro"
