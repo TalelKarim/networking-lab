@@ -1,18 +1,10 @@
-terraform {
-  required_version = ">= 1.1.0"
-
-  backend "s3" {
-    # Nom de votre bucket S3 créé précédemment
-    bucket = "terraform-states-labs"
-    region = "eu-west-1"
-    # Chemin “clé” où Terraform écrira le state, 
-    # par exemple “networking-lab/terraform.tfstate”
-    key = "terraform.tfstate"
-
-    # (Optionnel, mais fortement recommandé) table DynamoDB pour le locking
-    dynamodb_table = "terraform-locks"
-
-    # Active le chiffrement KMS dans le bucket (ou SSE-S3 si configuré sur le bucket)
-    encrypt = true
-  }
-}
+# terraform { 
+#   cloud { 
+    
+#     organization = "labs_terraform_access" 
+    
+#     workspaces { 
+#       name = "lab" 
+#     } 
+#   } 
+# }
