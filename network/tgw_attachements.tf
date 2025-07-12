@@ -52,6 +52,6 @@ module "tgw_onprem_attachment" {
   vpc_id               = module.vpc_onprem.vpc_id
 
   # Les deux subnets privés du VPC-DB
-  subnet_ids = module.vpc_onprem.vpc_onprem_tgw_subnets
+  subnet_ids = module.vpc_onprem.intra_subnets_ids
 
 }
