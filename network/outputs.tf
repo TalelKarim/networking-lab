@@ -67,3 +67,35 @@ output "vpc_app_cidr_block" {
   description = "Main CIDR block of vpc web"
   value       = module.vpc_app.vpc_cidr_blocks
 }
+
+
+#TGW cidrs outputs 
+
+output "vpc_web_tgw_subnets" {
+  description = "Main CIDR block of vpc web"
+  value       = module.vpc_web.intra_subnets_ids
+}
+
+output "vpc_app_tgw_subnets" {
+  description = "Main CIDR block of vpc app"
+  value       = module.vpc_app.intra_subnets_ids
+}
+
+
+output "vpc_db_tgw_subnets" {
+  description = "Main CIDR block of vpc app"
+  value       = module.vpc_db.intra_subnets_ids
+}
+
+
+output "vpc_shared_tgw_subnets" {
+  description = "Main CIDR block of vpc app"
+  value       = module.vpc_shared.intra_subnets_ids
+}
+
+
+
+output "vpc_onprem_tgw_subnets" {
+  description = "Main CIDR block of vpc app"
+  value       = module.vpc_onprem.intra_subnets_ids
+}

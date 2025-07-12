@@ -1,9 +1,9 @@
-module "tgw_app_attachment" {
+module "tgw_web_attachment" {
   source               = "../modules/tgw_attachment"
-  tgw_attachement_name = "vpc-app-tgw-attachement"
+  tgw_attachement_name = "vpc-web-tgw-attachement"
   transit_gateway_id   = module.tgw.transit_gateway_id
-  subnet_ids           = module.vpc_app.private_subnets_ids
-  vpc_id               = module.vpc_app.vpc_id
+  subnet_ids           = module.vpc_web.intra_subnets_ids
+  vpc_id               = module.vpc_web.vpc_id
 }
 
 
@@ -12,7 +12,7 @@ module "tgw_app_attachment" {
   source               = "../modules/tgw_attachment"
   tgw_attachement_name = "vpc-app-tgw-attachement"
   transit_gateway_id   = module.tgw.transit_gateway_id
-  subnet_ids           = module.vpc_app.private_subnets_ids
+  subnet_ids           = module.vpc_app.intra_subnets_ids
   vpc_id               = module.vpc_app.vpc_id
 }
 
@@ -25,7 +25,7 @@ module "tgw_db_attachment" {
   vpc_id               = module.vpc_db.vpc_id
 
   # Les deux subnets privés du VPC-DB
-  subnet_ids = module.vpc_db.private_subnets_ids
+  subnet_ids = module.vpc_db.intra_subnets_ids
 
 }
 
@@ -39,10 +39,8 @@ module "tgw_shared_attachment" {
   transit_gateway_id   = module.tgw.transit_gateway_id
   vpc_id               = module.vpc_shared.vpc_id
 
-  subnet_ids = [
-    module.vpc_shared.private_subnets_ids[0], # one in AZ 1
-    module.vpc_shared.private_subnets_ids[1], # one in AZ 2
-  ]
+  subnet_ids = module.vpc_shared.intra_subnets_ids
+
 }
 
 
@@ -54,6 +52,6 @@ module "tgw_onprem_attachment" {
   vpc_id               = module.vpc_onprem.vpc_id
 
   # Les deux subnets privés du VPC-DB
-  subnet_ids = module.vpc_onprem.private_subnets_ids
+  subnet_ids = module.vpc_onprem.vpc_onprem_tgw_subnets
 
 }
