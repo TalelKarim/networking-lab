@@ -8,6 +8,16 @@ module "tgw_app_attachment" {
 
 
 
+module "tgw_app_attachment" {
+  source               = "../modules/tgw_attachment"
+  tgw_attachement_name = "vpc-app-tgw-attachement"
+  transit_gateway_id   = module.tgw.transit_gateway_id
+  subnet_ids           = module.vpc_app.private_subnets_ids
+  vpc_id               = module.vpc_app.vpc_id
+}
+
+
+
 module "tgw_db_attachment" {
   source               = "../modules/tgw_attachment"
   tgw_attachement_name = "vpc-db-tgw-attachment"

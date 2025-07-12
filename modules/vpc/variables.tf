@@ -14,6 +14,12 @@ variable "is_public" {
   description = "variable to define if there are public subnets"
 }
 
+variable "is_tgw" {
+  type        = bool
+  default     = false
+  description = "variable to define if there is a transit gateway attachement to the vpc"
+}
+
 variable "is_private" {
   type        = bool
   default     = false
@@ -25,6 +31,10 @@ variable "public_subnets_cidrs" {
   default = []
 }
 
+variable "intra_subnets_cidrs" {
+  type    = list(string)
+  default = []
+}
 
 variable "private_subnets_cidrs" {
   type    = list(string)

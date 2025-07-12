@@ -3,8 +3,10 @@ module "vpc_web" {
   vpc_name             = "vpc-web"
   vpc_cidr             = "10.0.1.0/24"
   is_public            = true
+  is_tgw = true 
   availability_zones   = ["eu-west-1a", "eu-west-1b"]
-  public_subnets_cidrs = ["10.0.1.0/25", "10.0.1.128/25"]
+  public_subnets_cidrs = ["10.0.1.0/26", "10.0.1.64/25"]
+  intra_subnets_cidrs = [ "10.0.1.128" ]
   role                 = "frontend-vpc"
 }
 
@@ -14,9 +16,11 @@ module "vpc_app" {
   vpc_cidr              = "10.0.2.0/24"
   is_public             = true
   is_private            = true
+  is_tgw = true
   availability_zones    = ["eu-west-1a", "eu-west-1b"]
-  public_subnets_cidrs  = ["10.0.2.0/26"]
-  private_subnets_cidrs = ["10.0.2.64/26", "10.0.2.128/26"]
+  public_subnets_cidrs  = ["10.0.2.128/26"]
+  private_subnets_cidrs = ["10.0.2.0/26", "10.0.2.64/26"]
+  intra_subnets_cidrs = ["10.0.2.192/26"]
   enable_nat_gateway    = true
   role                  = "Backend-vpc"
 }
@@ -28,9 +32,11 @@ module "vpc_db" {
   vpc_cidr              = "10.0.3.0/24"
   is_public             = false
   is_private            = true
+  is_tgw = true
   availability_zones    = ["eu-west-1a", "eu-west-1b"]
-  public_subnets_cidrs  = []
-  private_subnets_cidrs = ["10.0.3.0/25", "10.0.3.128/25"]
+  public_subnets_cidrs  = ["10.0.3.128/26"]
+  private_subnets_cidrs = ["10.0.3.0/26", "10.0.3.64/26"]
+  intra_subnets_cidrs = []
   enable_nat_gateway    = false
   role                  = "DAtabase-vpc"
 }
@@ -42,13 +48,15 @@ module "vpc_shared" {
   vpc_cidr             = "10.0.4.0/24"
   is_public            = false
   is_private           = true
+  is_tgw = true
   availability_zones   = ["eu-west-1a", "eu-west-1b"]
   public_subnets_cidrs = [] # pas de sous-réseaux publics directs
+  intra_subnets_cidrs = ["10.0.4.128/27"]
   private_subnets_cidrs = [
-    "10.0.4.0/26",   # Subnet-Shared-NLB-AZ-A
-    "10.0.4.64/26",  # Subnet-Shared-NLB-AZ-B
-    "10.0.4.128/26", # Subnet-Shared-GWLB-AZ-A
-    "10.0.4.192/26"  # Subnet-Shared-GWLB-AZ-B
+    "10.0.4.0/27",   # Subnet-Shared-NLB-AZ-A
+    "10.0.4.64/27",  # Subnet-Shared-NLB-AZ-B
+    "10.0.4.32/27", # Subnet-Shared-GWLB-AZ-A
+    "10.0.4.96/27"  # Subnet-Shared-GWLB-AZ-B
   ]
   role = "Shared-vpc"
 
@@ -63,9 +71,11 @@ module "vpc_onprem" {
   vpc_cidr              = "10.255.0.0/24"
   is_public             = false
   is_private            = true
+  is_tgw = true
   availability_zones    = ["eu-west-1a"] # on peut se contenter d’une AZ
   public_subnets_cidrs  = []
-  private_subnets_cidrs = ["10.255.0.0/24"]
+  private_subnets_cidrs = ["10.255.0.0/25"]
+  intra_subnets_cidrs   = ["10.255.0.128/25"]
   enable_nat_gateway    = false
   role                  = "Onprem-vpc"
 }
