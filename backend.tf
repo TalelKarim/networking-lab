@@ -1,10 +1,10 @@
-# terraform { 
-#   cloud { 
+terraform { 
+  cloud { 
     
-#     organization = "labs_terraform_access" 
+    organization = "labs_terraform_access" 
     
-#     workspaces { 
-#       name = "lab" 
-#     } 
-#   } 
-# }
+    workspaces { 
+      name = "lab" 
+    } 
+  } 
+}
