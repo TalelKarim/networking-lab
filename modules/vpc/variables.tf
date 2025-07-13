@@ -71,5 +71,6 @@ variable "transit_gateway_id" {
 
 
 variable "tgw_destination_cidr_block" {
-  type = string
+  type    = list(string)
+  default = [""]
 }

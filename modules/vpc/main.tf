@@ -17,4 +17,4 @@ module "vpc" {
     Environment = "lab"
     Role        = var.role
   }
-} 
+}
