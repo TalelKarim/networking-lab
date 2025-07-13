@@ -7,6 +7,7 @@ module "vpc_web" {
   availability_zones   = ["eu-west-1a", "eu-west-1b"]
   public_subnets_cidrs = ["10.0.1.0/26", "10.0.1.64/25"]
   intra_subnets_cidrs  = ["10.0.1.128"]
+  tgw_destination_cidr_block = ["10.0.2.0/24","10.0.4.0/24"]
   role                 = "frontend-vpc"
 }
 
@@ -21,6 +22,7 @@ module "vpc_app" {
   public_subnets_cidrs  = ["10.0.2.128/26"]
   private_subnets_cidrs = ["10.0.2.0/26", "10.0.2.64/26"]
   intra_subnets_cidrs   = ["10.0.2.192/26"]
+  tgw_destination_cidr_block = ["10.0.1.0/24","10.0.3.0/24","10.0.4.0/24"]
   enable_nat_gateway    = true
   role                  = "Backend-vpc"
 }
@@ -36,6 +38,7 @@ module "vpc_db" {
   availability_zones    = ["eu-west-1a", "eu-west-1b"]
   public_subnets_cidrs  = ["10.0.3.128/26"]
   private_subnets_cidrs = ["10.0.3.0/26", "10.0.3.64/26"]
+  tgw_destination_cidr_block = ["10.0.2.0/24","10.0.4.0/24"]
   intra_subnets_cidrs   = []
   enable_nat_gateway    = false
   role                  = "DAtabase-vpc"
@@ -52,6 +55,7 @@ module "vpc_shared" {
   availability_zones   = ["eu-west-1a", "eu-west-1b"]
   public_subnets_cidrs = [] # pas de sous-réseaux publics directs
   intra_subnets_cidrs  = ["10.0.4.128/27"]
+  tgw_destination_cidr_block =  ["10.0.2.0/24","10.0.3.0/24","10.0.2.0/24","10.0.0.0/24"]
   private_subnets_cidrs = [
     "10.0.4.0/27",  # Subnet-Shared-NLB-AZ-A
     "10.0.4.64/27", # Subnet-Shared-NLB-AZ-B
@@ -75,6 +79,7 @@ module "vpc_onprem" {
   availability_zones    = ["eu-west-1a"] # on peut se contenter d’une AZ
   public_subnets_cidrs  = []
   private_subnets_cidrs = ["10.255.0.0/25"]
+  tgw_destination_cidr_block =  ["10.0.2.0/24","10.0.3.0/24","10.0.2.0/24","10.0.0.0/24"]
   intra_subnets_cidrs   = ["10.255.0.128/25"]
   enable_nat_gateway    = false
   role                  = "Onprem-vpc"

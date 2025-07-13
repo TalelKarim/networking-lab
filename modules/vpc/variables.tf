@@ -61,3 +61,15 @@ variable "role" {
   default = "vpc"
 
 }
+
+
+
+variable "transit_gateway_id" {
+  type = string
+  default = ""
+}
+
+
+variable "tgw_destination_cidr_block" {
+  type = string
+}
