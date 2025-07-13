@@ -65,7 +65,7 @@ variable "role" {
 
 
 variable "transit_gateway_id" {
-  type = string
+  type    = string
   default = ""
 }
 
