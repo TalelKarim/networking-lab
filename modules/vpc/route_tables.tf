@@ -88,32 +88,32 @@ resource "aws_route_table_association" "public" {
   route_table_id = each.value.route_table_id
 }
 
-resource "aws_route" "internet_access" {
-  for_each = {
-    for idx, rt_id in module.vpc.public_route_table_ids :
-    idx => rt_id
-  }
+# resource "aws_route" "internet_access" {
+#   for_each = {
+#     for idx, rt_id in module.vpc.public_route_table_ids :
+#     idx => rt_id
+#   }
 
-  route_table_id         = each.value
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = module.vpc.igw_id
-}
+#   route_table_id         = each.value
+#   destination_cidr_block = "0.0.0.0/0"
+#   gateway_id             = module.vpc.igw_id
+# }
 
 
 /////////////////////////////////////////////////////////////////////////////
 
 // PRIVATE TO NAT (only if NAT is enabled)
-resource "aws_route" "private_to_nat" {
-  for_each = var.enable_nat_gateway ? {
-    for idx, rt_id in module.vpc.private_route_table_ids :
-    idx => {
-      route_table_id = rt_id
-      nat_gateway_id = module.vpc.natgw_ids[idx]
-    }
-  } : {}
+# resource "aws_route" "private_to_nat" {
+#   for_each = var.enable_nat_gateway ? {
+#     for idx, rt_id in module.vpc.private_route_table_ids :
+#     idx => {
+#       route_table_id = rt_id
+#       nat_gateway_id = module.vpc.natgw_ids[idx]
+#     }
+#   } : {}
 
-  route_table_id         = each.value.route_table_id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = each.value.nat_gateway_id
-}
+#   route_table_id         = each.value.route_table_id
+#   destination_cidr_block = "0.0.0.0/0"
+#   nat_gateway_id         = each.value.nat_gateway_id
+# }
 
