@@ -11,7 +11,6 @@ module "vpc" {
   map_public_ip_on_launch = true
   enable_nat_gateway      = var.enable_nat_gateway
   enable_vpn_gateway      = var.enable_vpn_gateway
-  manage_default_route_table = false
   tags = {
     Terraform   = "true"
     Environment = "lab"
