@@ -59,18 +59,15 @@ variable "enable_nat_gateway" {
 variable "role" {
   type    = string
   default = "vpc"
-
 }
 
 
 
 variable "transit_gateway_id" {
   type    = string
-  default = ""
 }
 
 
 variable "tgw_destination_cidr_block" {
   type    = list(string)
-  default = [""]
 }
