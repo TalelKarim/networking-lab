@@ -81,3 +81,72 @@ resource "aws_route" "intra_to_tgw" {
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
 }
+
+
+//Public route tables 
+
+resource "aws_route_table" "public" {
+  for_each = {
+    for idx, subnet_id in module.vpc.public_subnets : idx => subnet_id
+  }
+  vpc_id = module.vpc.vpc_id
+  tags = {
+    Name = "${var.vpc_name}-public-rt-${each.key}"
+  }
+}
+resource "aws_route_table_association" "public" {
+  for_each = aws_route_table.public
+  subnet_id      = module.vpc.public_subnets[each.key]
+  route_table_id = each.value.id
+}
+
+resource "aws_route" "internet_access" {
+  for_each = aws_route_table.public
+  route_table_id         = each.value.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = module.vpc.igw_id
+}
+
+
+resource "aws_route" "private_to_nat" {
+  for_each = var.enable_nat_gateway ? {
+    for idx, rt in aws_route_table.private :
+    idx => {
+      route_table_id = rt.id
+      nat_gateway_id = module.vpc.natgw_ids[idx]
+    }
+  } : {}
+  route_table_id         = each.value.route_table_id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = each.value.nat_gateway_id
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
