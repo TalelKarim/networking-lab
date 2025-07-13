@@ -64,10 +64,10 @@ variable "role" {
 
 
 variable "transit_gateway_id" {
-  type    = string
+  type = string
 }
 
 
 variable "tgw_destination_cidr_block" {
-  type    = list(string)
+  type = list(string)
 }
