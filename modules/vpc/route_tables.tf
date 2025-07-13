@@ -22,7 +22,7 @@ resource "aws_route" "private_to_tgw" {
           cidr_block     = cidr
         }
       ]
-    ]) : pair.key => {
+      ]) : pair.key => {
       route_table_id = pair.route_table_id
       cidr_block     = pair.cidr_block
     }
@@ -60,7 +60,7 @@ resource "aws_route" "intra_to_tgw" {
           cidr_block     = cidr
         }
       ]
-    ]) : pair.key => {
+      ]) : pair.key => {
       route_table_id = pair.route_table_id
       cidr_block     = pair.cidr_block
     }
