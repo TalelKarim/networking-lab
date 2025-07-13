@@ -8,6 +8,7 @@ module "vpc_web" {
   public_subnets_cidrs       = ["10.0.1.0/26", "10.0.1.64/26"]
   intra_subnets_cidrs        = ["10.0.1.128/26"]
   tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.4.0/24"]
+  transit_gateway_id         = module.tgw.transit_gateway_id
   role                       = "frontend-vpc"
 }
 
@@ -22,6 +23,7 @@ module "vpc_app" {
   public_subnets_cidrs       = ["10.0.2.128/26"]
   private_subnets_cidrs      = ["10.0.2.0/26", "10.0.2.64/26"]
   intra_subnets_cidrs        = ["10.0.2.192/26"]
+  transit_gateway_id         = module.tgw.transit_gateway_id
   tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.4.0/24"]
   enable_nat_gateway         = true
   role                       = "Backend-vpc"
@@ -38,6 +40,7 @@ module "vpc_db" {
   availability_zones         = ["eu-west-1a", "eu-west-1b"]
   public_subnets_cidrs       = ["10.0.3.128/26"]
   private_subnets_cidrs      = ["10.0.3.0/26", "10.0.3.64/26"]
+  transit_gateway_id         = module.tgw.transit_gateway_id
   tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.4.0/24"]
   intra_subnets_cidrs        = ["10.0.3.192/26"]
   enable_nat_gateway         = false
@@ -54,6 +57,7 @@ module "vpc_shared" {
   is_tgw                     = true
   availability_zones         = ["eu-west-1a", "eu-west-1b"]
   public_subnets_cidrs       = [] # pas de sous-réseaux publics directs
+  transit_gateway_id         = module.tgw.transit_gateway_id
   intra_subnets_cidrs        = ["10.0.4.128/27"]
   tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.3.0/24", "10.0.1.0/24", "10.0.0.0/24"]
   private_subnets_cidrs = [
@@ -78,6 +82,7 @@ module "vpc_onprem" {
   is_tgw                     = true
   availability_zones         = ["eu-west-1a"] # on peut se contenter d’une AZ
   public_subnets_cidrs       = []
+  transit_gateway_id         = module.tgw.transit_gateway_id
   private_subnets_cidrs      = ["10.255.0.0/25"]
   tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.2.0/24", "10.0.4.0/24"]
   intra_subnets_cidrs        = ["10.255.0.128/25"]
