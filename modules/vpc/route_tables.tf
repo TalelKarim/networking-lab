@@ -1,18 +1,18 @@
 // PRIVATE ROUTE TABLES
-resource "aws_route_table" "private" {
-  for_each = {
-    for idx, subnet_id in module.vpc.private_subnets : idx => subnet_id
-  }
+# resource "aws_route_table" "private" {
+#   for_each = {
+#     for idx, subnet_id in module.vpc.private_subnets : idx => subnet_id
+#   }
 
-  vpc_id = module.vpc.vpc_id
+#   vpc_id = module.vpc.vpc_id
 
-  tags = {
-    Name = "${var.vpc_name}-private-rt-${each.key}"
-  }
-}
+#   tags = {
+#     Name = "${var.vpc_name}-private-rt-${each.key}"
+#   }
+# }
 
 resource "aws_route_table_association" "private" {
-  for_each = aws_route_table.private
+  for_each = module.vpc.private_route_table_ids
 
   subnet_id      = module.vpc.private_subnets[each.key]
   route_table_id = each.value.id
@@ -42,21 +42,21 @@ resource "aws_route" "private_to_tgw" {
 
 
 
-// INTRA ROUTE TABLES
-resource "aws_route_table" "intra" {
-  for_each = {
-    for idx, subnet_id in module.vpc.intra_subnets : idx => subnet_id
-  }
+# // INTRA ROUTE TABLES
+# resource "aws_route_table" "intra" {
+#   for_each = {
+#     for idx, subnet_id in module.vpc.intra_subnets : idx => subnet_id
+#   }
 
-  vpc_id = module.vpc.vpc_id
+#   vpc_id = module.vpc.vpc_id
 
-  tags = {
-    Name = "${var.vpc_name}-intra-rt-${each.key}"
-  }
-}
+#   tags = {
+#     Name = "${var.vpc_name}-intra-rt-${each.key}"
+#   }
+# }
 
 resource "aws_route_table_association" "intra" {
-  for_each = aws_route_table.intra
+  for_each = module.vpc.intra_route_table_ids
 
   subnet_id      = module.vpc.intra_subnets[each.key]
   route_table_id = each.value.id
@@ -85,17 +85,17 @@ resource "aws_route" "intra_to_tgw" {
 
 //Public route tables 
 
-resource "aws_route_table" "public" {
-  for_each = {
-    for idx, subnet_id in module.vpc.public_subnets : idx => subnet_id
-  }
-  vpc_id = module.vpc.vpc_id
-  tags = {
-    Name = "${var.vpc_name}-public-rt-${each.key}"
-  }
-}
+# resource "aws_route_table" "public" {
+#   for_each = {
+#     for idx, subnet_id in module.vpc.public_subnets : idx => subnet_id
+#   }
+#   vpc_id = module.vpc.vpc_id
+#   tags = {
+#     Name = "${var.vpc_name}-public-rt-${each.key}"
+#   }
+# }
 resource "aws_route_table_association" "public" {
-  for_each       = aws_route_table.public
+  for_each       = module.vpc.public_route_table_ids
   subnet_id      = module.vpc.public_subnets[each.key]
   route_table_id = each.value.id
 }

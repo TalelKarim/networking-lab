@@ -22,6 +22,10 @@ output "vpc_cidr_blocks" {
 }
 
 
+output "route" {
+  value = module.vpc.route
+}
+
 
 output "intra_subnets_ids" {
   description = "The main CIDR Block of the vpc"
