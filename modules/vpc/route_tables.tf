@@ -95,13 +95,13 @@ resource "aws_route_table" "public" {
   }
 }
 resource "aws_route_table_association" "public" {
-  for_each = aws_route_table.public
+  for_each       = aws_route_table.public
   subnet_id      = module.vpc.public_subnets[each.key]
   route_table_id = each.value.id
 }
 
 resource "aws_route" "internet_access" {
-  for_each = aws_route_table.public
+  for_each               = aws_route_table.public
   route_table_id         = each.value.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = module.vpc.igw_id
