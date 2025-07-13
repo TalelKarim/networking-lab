@@ -10,6 +10,8 @@ module "compute_web" {
   open_ports = [
     { from_port = 80, to_port = 80, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
     { from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
+    { from_port = -1, to_port = -1, protocol = "icmp", cidr_blocks = ["0.0.0.0/0"] }
+
   ]
   ssh_allowed_cidrs = var.ssh_allowed_cidrs
 }
@@ -25,6 +27,8 @@ module "compute_app" {
   ami_id        = data.aws_ami.amzn2.id
   open_ports = [
     { from_port = 8080, to_port = 8080, protocol = "tcp", cidr_blocks = [module.network.vpc_web_cidr_block] },
+    { from_port = -1, to_port = -1, protocol = "icmp", cidr_blocks = ["0.0.0.0/0"] }
+
   ]
   ssh_allowed_cidrs = var.ssh_allowed_cidrs
 }
@@ -46,6 +50,9 @@ module "compute_strongswan" {
     { from_port = 500, to_port = 500, protocol = "udp", cidr_blocks = ["0.0.0.0/0"] },
     # NAT-T
     { from_port = 4500, to_port = 4500, protocol = "udp", cidr_blocks = ["0.0.0.0/0"] },
+
+    { from_port = -1, to_port = -1, protocol = "icmp", cidr_blocks = ["0.0.0.0/0"] },
+
   ]
 
   # SSH depuis votre poste d’administration
