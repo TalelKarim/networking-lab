@@ -9,8 +9,8 @@ module "vpc_web" {
   intra_subnets_cidrs        = ["10.0.1.128/26"]
   tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.4.0/24"]
   transit_gateway_id         = module.tgw.transit_gateway_id
-  flow_log = true 
-  flow_log_group_name = "/aws/vpc/vpc-web-flow-logs"
+  flow_log                   = true
+  flow_log_group_name        = "/aws/vpc/vpc-web-flow-logs"
   role                       = "frontend-vpc"
 }
 
@@ -26,8 +26,8 @@ module "vpc_app" {
   private_subnets_cidrs      = ["10.0.2.0/26", "10.0.2.64/26"]
   intra_subnets_cidrs        = ["10.0.2.192/26"]
   transit_gateway_id         = module.tgw.transit_gateway_id
-  flow_log = true 
-  flow_log_group_name = "/aws/vpc/vpc-app-flow-logs"
+  flow_log                   = true
+  flow_log_group_name        = "/aws/vpc/vpc-app-flow-logs"
   tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.4.0/24"]
   enable_nat_gateway         = true
   role                       = "Backend-vpc"

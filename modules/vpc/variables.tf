@@ -74,12 +74,12 @@ variable "tgw_destination_cidr_block" {
 
 
 variable "flow_log" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "flow_log_group_name" {
-  type = string
+  type    = string
   default = "/aws/vpc/default"
 }
 

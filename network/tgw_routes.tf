@@ -46,25 +46,25 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "onprem" {
 
 
 resource "aws_ec2_transit_gateway_route_table_association" "web" {
-  transit_gateway_attachment_id = module.tgw_web_attachment.attachment_id
+  transit_gateway_attachment_id  = module.tgw_web_attachment.attachment_id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.main.id
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "app" {
-  transit_gateway_attachment_id = module.tgw_app_attachment.attachment_id
+  transit_gateway_attachment_id  = module.tgw_app_attachment.attachment_id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.main.id
 }
 resource "aws_ec2_transit_gateway_route_table_association" "db" {
-  transit_gateway_attachment_id = module.tgw_db_attachment.attachment_id
+  transit_gateway_attachment_id  = module.tgw_db_attachment.attachment_id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.main.id
 }
 resource "aws_ec2_transit_gateway_route_table_association" "onprem" {
-  transit_gateway_attachment_id = module.tgw_onprem_attachment.attachment_id
+  transit_gateway_attachment_id  = module.tgw_onprem_attachment.attachment_id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.main.id
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "shared" {
-  transit_gateway_attachment_id = module.tgw_shared_attachment.attachment_id
+  transit_gateway_attachment_id  = module.tgw_shared_attachment.attachment_id
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.main.id
 }
 
