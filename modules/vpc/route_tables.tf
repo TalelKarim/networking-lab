@@ -88,6 +88,28 @@ resource "aws_route_table_association" "public" {
   route_table_id = each.value.route_table_id
 }
 
+
+
+resource "aws_route" "public_to_tgw" {
+  for_each = {
+    for pair in flatten([
+      for idx, rt_id in module.vpc.public_route_table_ids : [
+        for cidr in var.tgw_destination_cidr_block : {
+          key            = "${idx}-${cidr}"
+          route_table_id = rt_id
+          cidr_block     = cidr
+        }
+      ]
+      ]) : pair.key => {
+      route_table_id = pair.route_table_id
+      cidr_block     = pair.cidr_block
+    }
+  }
+
+  route_table_id         = each.value.route_table_id
+  destination_cidr_block = each.value.cidr_block
+  transit_gateway_id     = var.transit_gateway_id
+}
 # resource "aws_route" "internet_access" {
 #   for_each = {
 #     for idx, rt_id in module.vpc.public_route_table_ids :
