@@ -71,3 +71,15 @@ variable "transit_gateway_id" {
 variable "tgw_destination_cidr_block" {
   type = list(string)
 }
+
+
+variable "flow_log" {
+  type = bool
+  default = false
+}
+
+variable "flow_log_group_name" {
+  type = string
+  default = "/aws/vpc/default"
+}
+
