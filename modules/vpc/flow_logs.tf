@@ -42,7 +42,7 @@ resource "aws_flow_log" "vpc_flow_log" {
   log_destination      = aws_cloudwatch_log_group.flow_log[0].arn
   log_destination_type = "cloud-watch-logs"
   traffic_type         = "ALL"
-  vpc_id               = module.vpc.vpc_id 
+  vpc_id               = module.vpc.vpc_id
   iam_role_arn         = aws_iam_role.flow_log_role[0].arn
 }
 
