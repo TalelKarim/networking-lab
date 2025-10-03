@@ -52,29 +52,29 @@ resource "aws_route_table_association" "intra" {
   route_table_id = each.value.route_table_id
 }
 
-resource "aws_route" "intra_to_tgw" {
-  for_each = {
-    for pair in flatten([
-      for idx, rt_id in module.vpc.intra_route_table_ids : [
-        for cidr in var.tgw_destination_cidr_block : {
-          key            = "${idx}-${cidr}"
-          route_table_id = rt_id
-          cidr_block     = cidr
-        }
-      ]
-      ]) : pair.key => {
-      route_table_id = pair.route_table_id
-      cidr_block     = pair.cidr_block
-    }
-  }
+# resource "aws_route" "intra_to_tgw" {
+#   for_each = {
+#     for pair in flatten([
+#       for idx, rt_id in module.vpc.intra_route_table_ids : [
+#         for cidr in var.tgw_destination_cidr_block : {
+#           key            = "${idx}-${cidr}"
+#           route_table_id = rt_id
+#           cidr_block     = cidr
+#         }
+#       ]
+#       ]) : pair.key => {
+#       route_table_id = pair.route_table_id
+#       cidr_block     = pair.cidr_block
+#     }
+#   }
 
-  route_table_id         = each.value.route_table_id
-  destination_cidr_block = each.value.cidr_block
-  transit_gateway_id     = var.transit_gateway_id
+#   route_table_id         = each.value.route_table_id
+#   destination_cidr_block = each.value.cidr_block
+#   transit_gateway_id     = var.transit_gateway_id
 
-  depends_on = [var.tgw_attachment_dep]
+#   depends_on = [var.tgw_attachment_dep]
 
-}
+# }
 
 
 /////////////////////////////////////////////////////////////////////////////

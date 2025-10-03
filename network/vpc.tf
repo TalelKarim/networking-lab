@@ -21,7 +21,7 @@ module "vpc_web" {
   ]
 
   transit_gateway_id         = module.tgw.transit_gateway_id
-  tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.4.0/24"]
+  tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.4.0/24","10.255.0.0/24"]
   flow_log                   = true
   flow_log_group_name        = "/aws/vpc/vpc-web-flow-logs"
   role                       = "frontend-vpc"
