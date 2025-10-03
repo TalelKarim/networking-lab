@@ -31,6 +31,8 @@ resource "aws_route" "private_to_tgw" {
   route_table_id         = each.value.route_table_id
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
+
+  depends_on = [ var.tgw_attachment_dep ]
 }
 
 
@@ -69,6 +71,9 @@ resource "aws_route" "intra_to_tgw" {
   route_table_id         = each.value.route_table_id
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
+
+  depends_on = [ var.tgw_attachment_dep ]
+
 }
 
 
@@ -109,6 +114,9 @@ resource "aws_route" "public_to_tgw" {
   route_table_id         = each.value.route_table_id
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
+
+  depends_on = [ var.tgw_attachment_dep ]
+
 }
 # resource "aws_route" "internet_access" {
 #   for_each = {

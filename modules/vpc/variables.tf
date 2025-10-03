@@ -41,6 +41,10 @@ variable "private_subnets_cidrs" {
   default = []
 }
 
+variable "tgw_attachment_dep" {
+  type = string
+}
+
 variable "availability_zones" {
   type    = list(string)
   default = []
