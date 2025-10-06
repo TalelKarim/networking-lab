@@ -12,7 +12,7 @@ module "db" {
   password = var.db_password
   port     = 3306
 
-  multi_az = true  # ✅ clé cruciale pour activer la réplication multi-AZ
+  multi_az = true # ✅ clé cruciale pour activer la réplication multi-AZ
 
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   subnet_ids             = var.db_subnet_ids
