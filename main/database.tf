@@ -1,7 +1,7 @@
 module "database" {
   source           = "../modules/database"
   engine           = "mysql"
-  engine_version   = "8.0.42"
+  engine_version   = "8.0"
   instance_class   = "db.m7i.large"
   identifier       = "lab-db"
   db_subnet_ids    = module.network.vpc_db_private_subnets_ids
