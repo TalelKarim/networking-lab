@@ -9,5 +9,6 @@ module "database" {
   db_name          = "demo"
   vpc_db_id        = module.network.vpc_db_id
   db_password      = var.db_password
-  vpc_backend_cidr = module.network.vpc_app_cidr_block
+  vpc_backend_cidr = [module.network.vpc_app_cidr_block]
+  family           = "mysql8.0"
 }

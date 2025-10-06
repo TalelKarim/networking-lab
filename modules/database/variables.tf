@@ -32,6 +32,11 @@ variable "db_subnet_ids" {
 }
 
 
+variable "family" {
+  type = string
+}
+
+
 
 variable "vpc_backend_cidr" {
   type = list(string)
@@ -39,5 +44,5 @@ variable "vpc_backend_cidr" {
 
 
 variable "vpc_db_id" {
-  type = string 
+  type = string
 }

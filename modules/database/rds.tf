@@ -6,11 +6,15 @@ module "db" {
   engine_version    = var.engine_version
   instance_class    = var.instance_class
   allocated_storage = 20
+  # DB parameter group
+  family = var.family
 
-  db_name  = var.db_name
-  username = var.db_username
-  password = var.db_password
-  port     = 3306
+  # DB option group
+  major_engine_version = var.engine_version
+  db_name              = var.db_name
+  username             = var.db_username
+  password             = var.db_password
+  port                 = 3306
 
   multi_az = true # ✅ clé cruciale pour activer la réplication multi-AZ
 
