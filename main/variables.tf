@@ -19,11 +19,10 @@ variable "db_password" {
 
 variable "db_user" {
   type = string
-  default = ""
+  default = "admin"
 }
 
 variable "db_name" {
   type = string
-  default = ""
-  
+  default = "demo"
 }
