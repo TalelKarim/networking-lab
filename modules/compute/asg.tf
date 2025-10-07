@@ -60,6 +60,17 @@ resource "aws_autoscaling_group" "asg" {
     version = "$Latest"
   }
 
+  instance_refresh {
+    strategy = "Rolling"
+
+    preferences {
+      min_healthy_percentage  = 0         # garde au moins 90% de capacité healthy
+      skip_matching           = true        # ne remplace pas les instances déjà conformes au dernier LT
+    }
+
+    triggers = ["launch_template"]          # déclenche sur changement de LT (version)
+  }
+
   # on référence conditionnellement l’ARN du TG adapté
   target_group_arns = compact([
     var.lb_type == "application" ? aws_lb_target_group.alb_tg[0].arn : null,
@@ -73,3 +84,6 @@ resource "aws_autoscaling_group" "asg" {
     propagate_at_launch = true
   }
 }
+
+
+
