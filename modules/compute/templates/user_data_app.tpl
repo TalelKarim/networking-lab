@@ -10,7 +10,7 @@ usermod -aG docker ec2-user || true
 docker rm -f app-backend >/dev/null 2>&1 || true
 
 docker run -d --name app-backend -p ${listen_port}:80 \
-  -e WORDPRESS_DB_HOST="${rds_endpoint}:3306" \
+  -e WORDPRESS_DB_HOST="${rds_endpoint}" \
   -e WORDPRESS_DB_USER="${db_user}" \
   -e WORDPRESS_DB_PASSWORD="${db_password}" \
   -e WORDPRESS_DB_NAME="${db_name}" \
