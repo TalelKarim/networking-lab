@@ -1,5 +1,27 @@
 # modules/compute/asg.tf
 
+
+
+
+locals {
+  is_web = lower(var.name) == "web"
+
+  # user-data pour WEB
+  web_ud = templatefile("${path.module}/templates/user_data_web.tpl", {
+    app_endpoint = var.web_app_endpoint   # IP/DNS privé du backend
+    app_port     = var.web_app_port
+  })
+
+  # user-data pour APP
+  app_ud = templatefile("${path.module}/templates/user_data_app.tpl", {
+    rds_endpoint = var.app_rds_endpoint
+    db_name      = var.app_db_name
+    db_user      = var.app_db_user
+    db_password  = var.app_db_password
+    listen_port  = var.app_listen_port
+  })
+}
+
 resource "aws_launch_template" "this" {
   name_prefix   = "${var.name}-lt"
   image_id      = var.ami_id
@@ -11,7 +33,7 @@ resource "aws_launch_template" "this" {
     aws_security_group.instance_sg.id
   ]
 
-  user_data = filebase64("${path.module}/templates/user_data_gen.tpl")
+  user_data = base64encode(local.is_web ? local.web_ud : local.app_ud)
 
 
   # Optional: pass user_data, tags, etc.

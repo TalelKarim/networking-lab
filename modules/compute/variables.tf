@@ -75,3 +75,39 @@ variable "lb_type" {
   type        = string
   default     = "none"
 }
+
+
+
+
+variable "web_app_endpoint" {
+  
+}
+
+
+variable "web_app_port" {
+  
+}
+
+
+variable "app_rds_endpoint" {
+  
+}
+
+
+variable "app_db_name" {
+  
+}
+
+variable "app_db_user" {
+  
+}
+
+
+variable "app_db_password" {
+  
+}
+
+
+variable "app_listen_port" {
+  
+}
