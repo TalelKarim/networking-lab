@@ -1,15 +1,31 @@
 #!/bin/bash
 set -euo pipefail
 
-yum update -y
-yum install -y nginx
 
-# Page de santé simple
+exec > >(tee -a /var/log/user-data.log) 2>&1
+
+
+# Détection AL2023 (dnf) vs AL2 (yum + amazon-linux-extras)
+if command -v dnf >/dev/null 2>&1; then
+  # Amazon Linux 2023
+  dnf -y update || true
+  dnf -y install nginx
+else
+  # Amazon Linux 2
+  yum -y update || true
+  amazon-linux-extras enable nginx1
+  yum clean metadata
+  yum -y install nginx
+fi
+
+# Petite page de health
+mkdir -p /usr/share/nginx/html
 cat >/usr/share/nginx/html/health.html <<'H'
 ok
 H
 
 # NGINX reverse proxy vers le backend
+mkdir -p /etc/nginx/conf.d
 cat >/etc/nginx/conf.d/reverse.conf <<EOF
 server {
     listen 80;
