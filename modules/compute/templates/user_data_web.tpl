@@ -1,20 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
-# -------- params from templatefile() --------
-APP_ENDPOINT="${app_endpoint}"   # IP/DNS privé de l'instance backend (ou ALB interne)
-APP_PORT="${app_port}"           # ex: 8080
-
-# -------- base system --------
 yum update -y
 yum install -y nginx
 
-# simple health page
+# Page de santé simple
 cat >/usr/share/nginx/html/health.html <<'H'
 ok
 H
 
-# reverse-proxy vers le backend
+# NGINX reverse proxy vers le backend
 cat >/etc/nginx/conf.d/reverse.conf <<EOF
 server {
     listen 80;
@@ -27,7 +22,7 @@ server {
     }
 
     location / {
-        proxy_pass http://${APP_ENDPOINT}:${APP_PORT};
+        proxy_pass http://${app_endpoint}:${app_port};
         proxy_http_version 1.1;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
