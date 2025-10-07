@@ -18,9 +18,12 @@ variable "db_password" {
 
 
 variable "db_user" {
-  
+  type = string
+  default = ""
 }
 
 variable "db_name" {
+  type = string
+  default = ""
   
 }

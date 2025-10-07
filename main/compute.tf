@@ -6,6 +6,7 @@ module "compute_web" {
   subnet_ids    = module.network.vpc_web_public_subnets_ids
   ami_id        = data.aws_ami.amzn2.id
   instance_type = var.general_instance_type
+  
   web_app_port = 80
   web_app_endpoint = module.compute_app.alb_dns_name
   app_listen_port = 80
@@ -18,6 +19,8 @@ module "compute_web" {
   ]
   ssh_allowed_cidrs = var.ssh_allowed_cidrs
 }
+
+
 
 module "compute_app" {
   source        = "../modules/compute"
