@@ -28,6 +28,8 @@ resource "aws_launch_template" "this" {
   instance_type = var.instance_type
   key_name      = aws_key_pair.lab.key_name
 
+  update_default_version = true
+
   # Apply the instance‐SG you defined earlier
   vpc_security_group_ids = [
     aws_security_group.instance_sg.id
