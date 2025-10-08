@@ -6,6 +6,7 @@ module "db" {
   engine_version    = var.engine_version
   instance_class    = var.instance_class
   allocated_storage = 20
+  manage_master_user_password	= false
   # DB parameter group
   family = var.family
 
