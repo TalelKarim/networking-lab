@@ -85,6 +85,8 @@ resource "aws_lb_target_group" "alb_tg" {
     timeout             = 5
     protocol            = "HTTP"
     port                = "traffic-port"
+    matcher             = "200-399"    # <— accepte 301/302
+
   }
 
   tags = {
