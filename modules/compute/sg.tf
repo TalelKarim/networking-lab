@@ -47,7 +47,7 @@ resource "aws_security_group_rule" "allow_alb" {
   to_port                  = 80
   protocol                 = "tcp"
   security_group_id        = aws_security_group.instance_sg.id
-  source_security_group_id = aws_security_group.lb_sg[*].id
+  source_security_group_id = aws_security_group.alb_sg.id
 }
 
 # Allow SSH from your office

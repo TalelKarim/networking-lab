@@ -38,8 +38,8 @@ resource "aws_lb" "alb" {
   count              = var.lb_type == "application" ? 1 : 0
   name               = "${var.name}-alb"
   internal           = false
-  load_balancer_type = "application"
-  security_groups    = aws_security_group.alb_sg.id
+  load_balancer_type = "application" 
+  security_groups    = [ aws_security_group.alb_sg.id  ]
   subnets            = var.subnet_ids
 
   tags = { Name = "${var.name}-alb" }
