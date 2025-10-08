@@ -39,7 +39,7 @@ resource "aws_lb" "alb" {
   name               = "${var.name}-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = aws_security_group.lb_sg[*].id
+  security_groups    = aws_security_group.alb_sg.id
   subnets            = var.subnet_ids
 
   tags = { Name = "${var.name}-alb" }
