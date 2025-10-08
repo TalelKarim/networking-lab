@@ -13,7 +13,7 @@ variable "ssh_allowed_cidrs" {
 
 variable "db_password" {
   type    = string
-  default = "0000"
+  default = "00000000"
 }
 
 
