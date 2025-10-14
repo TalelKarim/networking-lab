@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "web" {
-  domain_name       = "demovpc.internal"
+  domain_name       = "www.talelkarimchebbi.com"
   validation_method = "DNS"
   lifecycle { create_before_destroy = true }
 }
@@ -27,19 +27,13 @@ resource "aws_acm_certificate_validation" "web" {
 
 
 
-resource "aws_route53_zone" "main" {
-  name = "demovpc.internal"
-  comment = "Private hosted zone for testing purposes"
-}
-
-
 resource "aws_route53_record" "web_alias" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = "www.demovpc.internal"
+  name    = "www.talelkarimchebbi.com"
   type    = "A"
   alias {
     name                   = module.compute_web.alb_dns_name
-    zone_id                = aws_route53_zone.main.id
+    zone_id                = var.custom_zone_tkc_id
     evaluate_target_health = true
   }
 }

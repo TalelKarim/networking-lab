@@ -26,3 +26,8 @@ variable "db_name" {
   type    = string
   default = "demo"
 }
+
+
+variable "custom_zone_tkc_id" {
+  type = string
+}
