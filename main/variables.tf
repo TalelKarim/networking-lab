@@ -30,4 +30,5 @@ variable "db_name" {
 
 variable "custom_zone_tkc_id" {
   type = string
+  default = "Z02853281D3SLU2XO4SWA"
 }
