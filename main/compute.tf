@@ -6,11 +6,11 @@ module "compute_web" {
   subnet_ids    = module.network.vpc_web_public_subnets_ids
   ami_id        = data.aws_ami.amzn2.id
   instance_type = var.general_instance_type
-  
-  web_app_port = 80
+
+  web_app_port     = 80
   web_app_endpoint = module.compute_app.alb_dns_name
-  app_listen_port = 80
-  count_per_az  = 1
+  app_listen_port  = 80
+  count_per_az     = 1
   open_ports = [
     { from_port = 80, to_port = 80, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
     { from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
@@ -23,21 +23,21 @@ module "compute_web" {
 
 
 module "compute_app" {
-  source        = "../modules/compute"
-  name          = "app"
-  instance_type = var.general_instance_type
-  count_per_az  = 1
-  vpc_id        = module.network.vpc_app_id
-  app_db_user = var.db_user
-  app_db_name = var.db_name
-  app_db_password = var.db_password
-  web_app_port = 80
+  source           = "../modules/compute"
+  name             = "app"
+  instance_type    = var.general_instance_type
+  count_per_az     = 1
+  vpc_id           = module.network.vpc_app_id
+  app_db_user      = var.db_user
+  app_db_name      = var.db_name
+  app_db_password  = var.db_password
+  web_app_port     = 80
   app_rds_endpoint = module.database.rds_database_endpoint
   web_app_endpoint = module.compute_app.alb_dns_name
-  app_listen_port = 80
-  lb_type       = "application"
-  subnet_ids    = module.network.vpc_app_private_subnets_ids
-  ami_id        = data.aws_ami.amzn2.id
+  app_listen_port  = 80
+  lb_type          = "application"
+  subnet_ids       = module.network.vpc_app_private_subnets_ids
+  ami_id           = data.aws_ami.amzn2.id
   open_ports = [
     { from_port = 80, to_port = 80, protocol = "tcp", cidr_blocks = [module.network.vpc_web_cidr_block] },
     { from_port = -1, to_port = -1, protocol = "icmp", cidr_blocks = ["0.0.0.0/0"] }

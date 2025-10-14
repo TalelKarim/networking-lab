@@ -1,5 +1,5 @@
 resource "aws_ec2_instance_connect_endpoint" "eic" {
-  subnet_id          = module.vpc_app.private_subnets_ids[0]  # subnet où placer l’ENI
+  subnet_id          = module.vpc_app.private_subnets_ids[0] # subnet où placer l’ENI
   security_group_ids = [aws_security_group.eic_sg.id]
 
   tags = {

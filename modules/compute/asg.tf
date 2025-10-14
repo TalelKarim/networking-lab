@@ -8,7 +8,7 @@ locals {
 
   # user-data pour WEB
   web_ud = templatefile("${path.module}/templates/user_data_web.tpl", {
-    app_endpoint = var.web_app_endpoint   # IP/DNS privé du backend
+    app_endpoint = var.web_app_endpoint # IP/DNS privé du backend
     app_port     = var.web_app_port
   })
 
@@ -66,11 +66,11 @@ resource "aws_autoscaling_group" "asg" {
     strategy = "Rolling"
 
     preferences {
-      min_healthy_percentage  = 0         # garde au moins 90% de capacité healthy
-      skip_matching           = true        # ne remplace pas les instances déjà conformes au dernier LT
+      min_healthy_percentage = 0    # garde au moins 90% de capacité healthy
+      skip_matching          = true # ne remplace pas les instances déjà conformes au dernier LT
     }
 
-    triggers = ["launch_template"]          # déclenche sur changement de LT (version)
+    triggers = ["launch_template"] # déclenche sur changement de LT (version)
   }
 
   # on référence conditionnellement l’ARN du TG adapté

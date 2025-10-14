@@ -80,41 +80,41 @@ variable "lb_type" {
 
 
 variable "web_app_endpoint" {
-  type = string
+  type    = string
   default = ""
 }
 
 
 variable "web_app_port" {
-  type = string
+  type    = string
   default = ""
 }
 
 
 variable "app_rds_endpoint" {
-  type = string
+  type    = string
   default = ""
 }
 
 
 variable "app_db_name" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "app_db_user" {
-  type = string
+  type    = string
   default = ""
 }
 
 
 variable "app_db_password" {
-  type = string
+  type    = string
   default = ""
 }
 
 
 variable "app_listen_port" {
-  type = string
+  type    = string
   default = ""
 }

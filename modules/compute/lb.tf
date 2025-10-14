@@ -37,9 +37,9 @@ resource "aws_security_group" "lb_sg" {
 resource "aws_lb" "alb" {
   count              = var.lb_type == "application" ? 1 : 0
   name               = "${var.name}-alb"
-  internal           = false
-  load_balancer_type = "application" 
-  security_groups    = [ aws_security_group.alb_sg.id  ]
+  internal           = var.name == "app" ? true : false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb_sg.id]
   subnets            = var.subnet_ids
 
   tags = { Name = "${var.name}-alb" }
@@ -85,7 +85,7 @@ resource "aws_lb_target_group" "alb_tg" {
     timeout             = 5
     protocol            = "HTTP"
     port                = "traffic-port"
-    matcher             = "200-399"    # <— accepte 301/302
+    matcher             = "200-399" # <— accepte 301/302
 
   }
 

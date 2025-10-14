@@ -1,4 +1,4 @@
 variable "eic_name" {
-    type = string
-    default = "transverse"
+  type    = string
+  default = "transverse"
 }
