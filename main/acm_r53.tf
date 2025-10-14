@@ -13,7 +13,7 @@ resource "aws_route53_record" "web_cert_validation" {
       value = dvo.resource_record_value
     }
   }
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = var.custom_zone_tkc_id
   name    = each.value.name
   type    = each.value.type
   records = [each.value.value]
@@ -28,7 +28,7 @@ resource "aws_acm_certificate_validation" "web" {
 
 
 resource "aws_route53_record" "web_alias" {
-  zone_id = aws_route53_zone.main.zone_id
+  zone_id = var.custom_zone_tkc_id
   name    = "www.talelkarimchebbi.com"
   type    = "A"
   alias {
