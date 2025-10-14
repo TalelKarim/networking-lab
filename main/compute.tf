@@ -9,6 +9,7 @@ module "compute_web" {
 
   web_app_port     = 80
   web_app_endpoint = module.compute_app.alb_dns_name
+  frontend_cert_arn = aws_acm_certificate.web.arn
   app_listen_port  = 80
   count_per_az     = 1
   open_ports = [

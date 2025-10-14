@@ -118,3 +118,10 @@ variable "app_listen_port" {
   type    = string
   default = ""
 }
+
+
+
+variable "frontend_cert_arn" {
+  type = string
+  default = ""
+}
