@@ -64,7 +64,7 @@ resource "aws_autoscaling_group" "asg" {
   # ELB Health Checks Base
 
   health_check_type         = "ELB"
-  health_check_grace_period = 300
+  health_check_grace_period = 240
 
   launch_template {
     id      = aws_launch_template.this.id
