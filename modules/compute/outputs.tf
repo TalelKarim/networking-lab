@@ -3,6 +3,11 @@ output "alb_dns_name" {
   value       = try(aws_lb.alb[0].dns_name, null)
 }
 
+output "alb_zone_id" {
+  value = aws_lb.alb[0].zone_id
+}
+
+
 output "alb_arn" {
   description = "ARN du load balancer (si lb_type = application)"
   value       = try(aws_lb.alb[0].arn, null)

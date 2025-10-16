@@ -33,7 +33,7 @@ resource "aws_route53_record" "web_alias" {
   type    = "A"
   alias {
     name                   = module.compute_web.alb_dns_name
-    zone_id                = var.custom_zone_tkc_id
+    zone_id                = module.compute_web.alb_zone_id
     evaluate_target_health = true
   }
 }
