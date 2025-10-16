@@ -23,6 +23,9 @@ module "compute_web" {
 
   ]
   ssh_allowed_cidrs = var.ssh_allowed_cidrs
+
+  depends_on = [aws_acm_certificate_validation.web]
+
 }
 
 

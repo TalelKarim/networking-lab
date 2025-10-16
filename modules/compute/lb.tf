@@ -137,8 +137,6 @@ resource "aws_lb_listener" "alb_https" {
     target_group_arn = aws_lb_target_group.alb_tg[0].arn
   }
 
-  depends_on = var.acm_validation_dep == null ? [] : [var.acm_validation_dep]
-
 }
 #################################
 # 6) Target Group & Listener NLB

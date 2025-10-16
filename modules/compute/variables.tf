@@ -133,9 +133,9 @@ variable "frontend_cert_arn" {
 }
 
 
-variable "acm_validation_dep" {
-  # on accepte n'importe quel type, Terraform ne lit que l'ID pour depends_on
-  type        = any
-  default     = null
-  description = "Passe ici aws_acm_certificate_validation.web pour forcer l'attente avant de créer le listener 443."
-}
+# variable "acm_validation_dep" {
+#   # on accepte n'importe quel type, Terraform ne lit que l'ID pour depends_on
+#   type        = any
+#   default     = null
+#   description = "Passe ici aws_acm_certificate_validation.web pour forcer l'attente avant de créer le listener 443."
+# }
