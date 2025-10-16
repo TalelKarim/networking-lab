@@ -125,7 +125,7 @@ resource "aws_lb_listener" "alb_http" {
 
 
 resource "aws_lb_listener" "alb_https" {
-  count             = var.lb_type == "web" ? 1 : 0
+  count             = var.lb_type == "application" && var.name == "web" ? 1 : 0
   load_balancer_arn = aws_lb.alb[0].arn
   port              = 443
   protocol          = "HTTPS"
