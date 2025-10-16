@@ -1,24 +1,21 @@
-locals {
-  web_cert_ready = aws_acm_certificate_validation.web.id != ""
-}
 
 
 
 module "compute_web" {
-  source        = "../modules/compute"
-  name          = "web"
-  lb_type       = "application"
-  vpc_id        = module.network.vpc_web_id
-  subnet_ids    = module.network.vpc_web_public_subnets_ids
-  ami_id        = data.aws_ami.amzn2.id
-  instance_type = var.general_instance_type
-  https_enabled_ready = local.web_cert_ready
+  source             = "../modules/compute"
+  name               = "web"
+  lb_type            = "application"
+  vpc_id             = module.network.vpc_web_id
+  subnet_ids         = module.network.vpc_web_public_subnets_ids
+  ami_id             = data.aws_ami.amzn2.id
+  instance_type      = var.general_instance_type
+  acm_validation_dep = aws_acm_certificate_validation.web
 
-  web_app_port     = 80
-  web_app_endpoint = module.compute_app.alb_dns_name
+  web_app_port      = 80
+  web_app_endpoint  = module.compute_app.alb_dns_name
   frontend_cert_arn = aws_acm_certificate.web.arn
-  app_listen_port  = 80
-  count_per_az     = 1
+  app_listen_port   = 80
+  count_per_az      = 1
   open_ports = [
     { from_port = 80, to_port = 80, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },
     { from_port = 443, to_port = 443, protocol = "tcp", cidr_blocks = ["0.0.0.0/0"] },

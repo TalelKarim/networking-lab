@@ -125,17 +125,20 @@ resource "aws_lb_listener" "alb_http" {
 
 
 resource "aws_lb_listener" "alb_https" {
-  count = var.lb_type == "application"  && var.frontend_cert_arn != null && var.https_enabled_ready? 1 : 0
+  count             = var.lb_type == "application" && var.frontend_cert_arn != null ? 1 : 0
   load_balancer_arn = aws_lb.alb[0].arn
   port              = 443
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06" 
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
   certificate_arn   = var.frontend_cert_arn
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb_tg[0].arn
   }
+
+  depends_on = var.acm_validation_dep == null ? [] : [var.acm_validation_dep]
+
 }
 #################################
 # 6) Target Group & Listener NLB
