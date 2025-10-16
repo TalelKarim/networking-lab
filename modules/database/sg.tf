@@ -21,6 +21,19 @@ resource "aws_security_group_rule" "allow_mysql_from_app_vpc" {
   description       = "Allow MySQL traffic from App VPC"
 }
 
+
+resource "aws_security_group_rule" "allow_mysql_from_talel_laptop_lmn" {
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  cidr_blocks       = "131.229.150.44/32" # autoriser tout le VPC app
+  security_group_id = aws_security_group.db_sg.id
+  description       = "Allow MySQL traffic from Talel's Laptop"
+}
+
+
+
 # Autoriser le trafic sortant (vers tout)
 resource "aws_security_group_rule" "allow_all_egress" {
   type              = "egress"
