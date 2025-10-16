@@ -10,6 +10,7 @@ locals {
   web_ud = templatefile("${path.module}/templates/user_data_web.tpl", {
     app_endpoint = var.web_app_endpoint # IP/DNS privé du backend
     app_port     = var.web_app_port
+    scheme       = var.web_backend_scheme
   })
 
   # user-data pour APP
@@ -64,7 +65,7 @@ resource "aws_autoscaling_group" "asg" {
 
   health_check_type         = "ELB"
   health_check_grace_period = 300
-  
+
   launch_template {
     id      = aws_launch_template.this.id
     version = "$Latest"

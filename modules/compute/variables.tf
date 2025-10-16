@@ -97,6 +97,13 @@ variable "app_rds_endpoint" {
 }
 
 
+variable "web_backend_scheme" {
+  type    = string
+  default = "http"
+}
+
+
+
 variable "app_db_name" {
   type    = string
   default = ""
