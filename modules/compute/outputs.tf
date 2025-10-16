@@ -4,7 +4,7 @@ output "alb_dns_name" {
 }
 
 output "alb_zone_id" {
-  value       = try(aws_lb.alb[0].dns_name, null)
+  value       = try(aws_lb.alb[0].zone_id, null)
 }
 
 
