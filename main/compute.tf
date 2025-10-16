@@ -9,8 +9,10 @@ module "compute_web" {
   subnet_ids         = module.network.vpc_web_public_subnets_ids
   ami_id             = data.aws_ami.amzn2.id
   instance_type      = var.general_instance_type
-  web_app_port      = 80
-  web_app_endpoint  = module.compute_app.alb_dns_name
+  web_app_port       = 80
+  web_backend_scheme = "http"
+  web_app_endpoint   = module.compute_app.alb_dns_name
+
   frontend_cert_arn = aws_acm_certificate.web.arn
   app_listen_port   = 80
   count_per_az      = 1

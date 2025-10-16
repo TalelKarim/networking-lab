@@ -30,7 +30,7 @@ resource "aws_launch_template" "this" {
   key_name      = aws_key_pair.lab.key_name
 
   update_default_version = true
-  
+
 
 
 
