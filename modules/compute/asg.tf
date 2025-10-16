@@ -29,6 +29,9 @@ resource "aws_launch_template" "this" {
   key_name      = aws_key_pair.lab.key_name
 
   update_default_version = true
+  
+
+
 
   # Apply the instance‐SG you defined earlier
   vpc_security_group_ids = [
@@ -57,6 +60,11 @@ resource "aws_autoscaling_group" "asg" {
   min_size         = var.min_capacity
   max_size         = var.max_capacity
 
+  # ELB Health Checks Base
+
+  health_check_type         = "ELB"
+  health_check_grace_period = 300
+  
   launch_template {
     id      = aws_launch_template.this.id
     version = "$Latest"
