@@ -120,8 +120,14 @@ variable "app_listen_port" {
 }
 
 
+variable "https_enabled_ready" {
+  type        = bool
+  default     = false
+  description = "Crée le listener HTTPS seulement si true (cert validé)."
+}
+
 
 variable "frontend_cert_arn" {
   type = string
-  default = ""
+  default = null
 }

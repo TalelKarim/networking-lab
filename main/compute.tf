@@ -1,3 +1,9 @@
+locals {
+  web_cert_ready = aws_acm_certificate_validation.web.id != ""
+}
+
+
+
 module "compute_web" {
   source        = "../modules/compute"
   name          = "web"
@@ -6,6 +12,7 @@ module "compute_web" {
   subnet_ids    = module.network.vpc_web_public_subnets_ids
   ami_id        = data.aws_ami.amzn2.id
   instance_type = var.general_instance_type
+  https_enabled_ready = local.web_cert_ready
 
   web_app_port     = 80
   web_app_endpoint = module.compute_app.alb_dns_name
