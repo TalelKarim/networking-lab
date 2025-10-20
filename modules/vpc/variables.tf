@@ -43,6 +43,7 @@ variable "private_subnets_cidrs" {
 
 variable "tgw_attachment_dep" {
   type = string
+  default = ""
 }
 
 variable "availability_zones" {
@@ -74,6 +75,7 @@ variable "transit_gateway_id" {
 
 variable "tgw_destination_cidr_block" {
   type = list(string)
+  default = [ "" ]
 }
 
 

@@ -126,18 +126,21 @@ module "vpc_onprem" {
   source                     = "../modules/vpc"
   vpc_name                   = "vpc-onprem"
   vpc_cidr                   = "10.255.0.0/24"
-  is_public                  = false
+
+  is_public                  = true
+  public_subnets_cidrs  = ["10.255.0.0/25"]
+
+
   is_private                 = true
-  is_tgw                     = true
+  private_subnets_cidrs = ["10.255.0.128/25"]
+
+
+  is_tgw                     = false
   availability_zones         = ["eu-west-1a"] # on peut se contenter d’une AZ
-  public_subnets_cidrs       = []
   transit_gateway_id         = module.tgw.transit_gateway_id
-  private_subnets_cidrs      = ["10.255.0.0/25"]
-  tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.2.0/24", "10.0.4.0/24"]
-  intra_subnets_cidrs        = ["10.255.0.128/25"]
+  # tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.2.0/24", "10.0.4.0/24"]
   enable_nat_gateway         = false
   role                       = "Onprem-vpc"
-  tgw_attachment_dep         = module.tgw_onprem_attachment.attachment_id
 }
 
 
