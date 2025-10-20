@@ -13,6 +13,7 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_route" "private_to_tgw" {
+  count = var.is_tgw ? 1 : 0
   for_each = {
     for pair in flatten([
       for idx, rt_id in module.vpc.private_route_table_ids : [
@@ -40,6 +41,7 @@ resource "aws_route" "private_to_tgw" {
 
 // INTRA ROUTE TABLES
 resource "aws_route_table_association" "intra" {
+
   for_each = {
     for idx, rt_id in module.vpc.intra_route_table_ids :
     idx => {
@@ -96,6 +98,7 @@ resource "aws_route_table_association" "public" {
 
 
 resource "aws_route" "public_to_tgw" {
+  count = var.is_tgw ? 1 : 0
   for_each = {
     for pair in flatten([
       for idx, rt_id in module.vpc.public_route_table_ids : [
