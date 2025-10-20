@@ -1,4 +1,7 @@
-// PRIVATE ROUTE TABLES
+########################
+# PRIVATE ROUTE TABLES #
+########################
+
 resource "aws_route_table_association" "private" {
   for_each = {
     for idx, rt_id in module.vpc.private_route_table_ids :
@@ -7,41 +10,39 @@ resource "aws_route_table_association" "private" {
       route_table_id = rt_id
     }
   }
-
   subnet_id      = each.value.subnet_id
   route_table_id = each.value.route_table_id
 }
 
+# on génère la liste des routes TGW privées uniquement si is_tgw = true
+locals {
+  private_tgw_routes = var.is_tgw ? flatten([
+    for idx, rt_id in module.vpc.private_route_table_ids : [
+      for cidr in var.tgw_destination_cidr_block : {
+        key            = "pri-${idx}-${cidr}"
+        route_table_id = rt_id
+        cidr_block     = cidr
+      }
+    ]
+  ]) : []
+}
+
 resource "aws_route" "private_to_tgw" {
-  count = var.is_tgw ? 1 : 0
-  for_each = {
-    for pair in flatten([
-      for idx, rt_id in module.vpc.private_route_table_ids : [
-        for cidr in var.tgw_destination_cidr_block : {
-          key            = "${idx}-${cidr}"
-          route_table_id = rt_id
-          cidr_block     = cidr
-        }
-      ]
-      ]) : pair.key => {
-      route_table_id = pair.route_table_id
-      cidr_block     = pair.cidr_block
-    }
-  }
+  for_each = { for r in local.private_tgw_routes : r.key => r }
 
   route_table_id         = each.value.route_table_id
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
 
-  depends_on = [var.tgw_attachment_dep]
+  # optionnel : voir note "depends_on" plus bas
+  depends_on = var.tgw_depends_on
 }
 
+#######################
+# INTRA ROUTE TABLES  #
+#######################
 
-/////////////////////////////////////////////////////////////////////////////
-
-// INTRA ROUTE TABLES
 resource "aws_route_table_association" "intra" {
-
   for_each = {
     for idx, rt_id in module.vpc.intra_route_table_ids :
     idx => {
@@ -49,39 +50,14 @@ resource "aws_route_table_association" "intra" {
       route_table_id = rt_id
     }
   }
-
   subnet_id      = each.value.subnet_id
   route_table_id = each.value.route_table_id
 }
 
-# resource "aws_route" "intra_to_tgw" {
-#   for_each = {
-#     for pair in flatten([
-#       for idx, rt_id in module.vpc.intra_route_table_ids : [
-#         for cidr in var.tgw_destination_cidr_block : {
-#           key            = "${idx}-${cidr}"
-#           route_table_id = rt_id
-#           cidr_block     = cidr
-#         }
-#       ]
-#       ]) : pair.key => {
-#       route_table_id = pair.route_table_id
-#       cidr_block     = pair.cidr_block
-#     }
-#   }
+########################
+# PUBLIC ROUTE TABLES  #
+########################
 
-#   route_table_id         = each.value.route_table_id
-#   destination_cidr_block = each.value.cidr_block
-#   transit_gateway_id     = var.transit_gateway_id
-
-#   depends_on = [var.tgw_attachment_dep]
-
-# }
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-// PUBLIC ROUTE TABLES
 resource "aws_route_table_association" "public" {
   for_each = {
     for idx, rt_id in module.vpc.public_route_table_ids :
@@ -90,63 +66,29 @@ resource "aws_route_table_association" "public" {
       route_table_id = rt_id
     }
   }
-
   subnet_id      = each.value.subnet_id
   route_table_id = each.value.route_table_id
 }
 
-
+locals {
+  public_tgw_routes = var.is_tgw ? flatten([
+    for idx, rt_id in module.vpc.public_route_table_ids : [
+      for cidr in var.tgw_destination_cidr_block : {
+        key            = "pub-${idx}-${cidr}"
+        route_table_id = rt_id
+        cidr_block     = cidr
+      }
+    ]
+  ]) : []
+}
 
 resource "aws_route" "public_to_tgw" {
-  count = var.is_tgw ? 1 : 0
-  for_each = {
-    for pair in flatten([
-      for idx, rt_id in module.vpc.public_route_table_ids : [
-        for cidr in var.tgw_destination_cidr_block : {
-          key            = "${idx}-${cidr}"
-          route_table_id = rt_id
-          cidr_block     = cidr
-        }
-      ]
-      ]) : pair.key => {
-      route_table_id = pair.route_table_id
-      cidr_block     = pair.cidr_block
-    }
-  }
+  for_each = { for r in local.public_tgw_routes : r.key => r }
 
   route_table_id         = each.value.route_table_id
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
 
-  depends_on = [var.tgw_attachment_dep]
-
+  # optionnel
+  depends_on = var.tgw_depends_on
 }
-# resource "aws_route" "internet_access" {
-#   for_each = {
-#     for idx, rt_id in module.vpc.public_route_table_ids :
-#     idx => rt_id
-#   }
-
-#   route_table_id         = each.value
-#   destination_cidr_block = "0.0.0.0/0"
-#   gateway_id             = module.vpc.igw_id
-# }
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-// PRIVATE TO NAT (only if NAT is enabled)
-# resource "aws_route" "private_to_nat" {
-#   for_each = var.enable_nat_gateway ? {
-#     for idx, rt_id in module.vpc.private_route_table_ids :
-#     idx => {
-#       route_table_id = rt_id
-#       nat_gateway_id = module.vpc.natgw_ids[idx]
-#     }
-#   } : {}
-
-#   route_table_id         = each.value.route_table_id
-#   destination_cidr_block = "0.0.0.0/0"
-#   nat_gateway_id         = each.value.nat_gateway_id
-# }
-

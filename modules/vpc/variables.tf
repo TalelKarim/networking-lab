@@ -26,6 +26,11 @@ variable "is_private" {
   description = "variable to define if there are private subnets"
 }
 
+
+variable "tgw_depends_on" {
+  type = string
+}
+
 variable "public_subnets_cidrs" {
   type    = list(string)
   default = []
