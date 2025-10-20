@@ -27,9 +27,7 @@ variable "is_private" {
 }
 
 
-variable "tgw_depends_on" {
-  type = list(string)
-}
+
 
 variable "public_subnets_cidrs" {
   type    = list(string)

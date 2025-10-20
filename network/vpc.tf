@@ -25,9 +25,7 @@ module "vpc_web" {
   flow_log                   = true
   flow_log_group_name        = "/aws/vpc/vpc-web-flow-logs"
   role                       = "frontend-vpc"
-  tgw_depends_on = [
-     module.tgw_web_attachment.attachment_id
-  ]
+
 }
 
 
@@ -59,9 +57,7 @@ module "vpc_app" {
   flow_log                   = true
   flow_log_group_name        = "/aws/vpc/vpc-app-flow-logs"
   role                       = "Backend-vpc"
-  tgw_depends_on = [
-     module.tgw_app_attachment.attachment_id
-  ]
+
 }
 
 
@@ -88,9 +84,7 @@ module "vpc_db" {
   tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.4.0/24"]
   enable_nat_gateway         = false
   role                       = "Database-vpc"
-  tgw_depends_on = [
-     module.tgw_db_attachment.attachment_id
-  ]
+
 }
 
 
@@ -103,6 +97,7 @@ module "vpc_shared" {
   is_private         = true
   is_tgw             = true
   availability_zones = ["eu-west-1a", "eu-west-1b"]
+
 
   private_subnets_cidrs = [
     "10.0.4.0/27",  # NLB A (1a)
@@ -119,9 +114,6 @@ module "vpc_shared" {
   transit_gateway_id         = module.tgw.transit_gateway_id
   tgw_destination_cidr_block = ["10.0.2.0/24", "10.0.3.0/24", "10.0.1.0/24", "10.0.0.0/24"]
   role                       = "Shared-vpc"
-  tgw_depends_on = [
-     module.tgw_shared_attachment.attachment_id
-  ]
 
 }
 
@@ -148,7 +140,6 @@ module "vpc_onprem" {
   # tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.2.0/24", "10.0.4.0/24"]
   enable_nat_gateway         = false
   role                       = "Onprem-vpc"
-  tgw_depends_on = null 
 }
 
 
