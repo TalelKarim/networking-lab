@@ -84,19 +84,10 @@ data "aws_ami" "amzn2" {
 resource "aws_instance" "strongswan" {
   ami                         = data.aws_ami.amzn2.id
   instance_type               = "t3.micro"
-  subnet_id                   = var.subnet_id
+  subnet_id                   = var.router_subnet_id
   vpc_security_group_ids      = [aws_security_group.strongswan_sg.id]
   associate_public_ip_address  = true  # nécessaire si le subnet est public
   source_dest_check           = false # autorise le routage VPN
-
-  user_data = <<-EOF
-              #!/bin/bash
-              set -eux
-              yum -y update
-              yum -y install strongswan
-              systemctl enable strongswan
-              systemctl start strongswan
-              EOF
 
   tags = {
     Name = "strongswan"

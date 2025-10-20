@@ -55,30 +55,30 @@ module "compute_app" {
 }
 
 
-# EC2 pour StrongSwan dans le VPC-Shared
-module "compute_strongswan" {
-  source        = "../modules/compute"
-  name          = "strongswan"
-  vpc_id        = module.network.vpc_onprem_id
-  subnet_ids    = module.network.vpc_onprem_public_subnets_ids
-  ami_id        = data.aws_ami.amzn2.id
-  instance_type = var.general_instance_type
-  count_per_az  = 1
+# # EC2 pour StrongSwan dans le VPC-Shared
+# module "compute_strongswan" {
+#   source        = "../modules/compute"
+#   name          = "strongswan"
+#   vpc_id        = module.network.vpc_onprem_id
+#   subnet_ids    = module.network.vpc_onprem_public_subnets_ids
+#   ami_id        = data.aws_ami.amzn2.id
+#   instance_type = var.general_instance_type
+#   count_per_az  = 1
 
-  # Ports nécessaires pour IPsec / IKEv2
-  open_ports = [
-    # IKE (ISAKMP)
-    { from_port = 500, to_port = 500, protocol = "udp", cidr_blocks = ["0.0.0.0/0"] },
-    # NAT-T
-    { from_port = 4500, to_port = 4500, protocol = "udp", cidr_blocks = ["0.0.0.0/0"] },
+#   # Ports nécessaires pour IPsec / IKEv2
+#   open_ports = [
+#     # IKE (ISAKMP)
+#     { from_port = 500, to_port = 500, protocol = "udp", cidr_blocks = ["0.0.0.0/0"] },
+#     # NAT-T
+#     { from_port = 4500, to_port = 4500, protocol = "udp", cidr_blocks = ["0.0.0.0/0"] },
 
-    { from_port = -1, to_port = -1, protocol = "icmp", cidr_blocks = ["0.0.0.0/0"] },
+#     { from_port = -1, to_port = -1, protocol = "icmp", cidr_blocks = ["0.0.0.0/0"] },
 
-  ]
+#   ]
 
-  # SSH depuis votre poste d’administration
-  ssh_allowed_cidrs = var.ssh_allowed_cidrs
-}
+#   # SSH depuis votre poste d’administration
+#   ssh_allowed_cidrs = var.ssh_allowed_cidrs
+# }
 
 
 
