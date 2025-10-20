@@ -58,6 +58,13 @@ output "vpc_onprem_private_subnets_ids" {
 }
 
 
+
+output "vpc_onprem_public_subnets_ids" {
+  description = "The ID of the Web Vpc"
+  value       = module.vpc_onprem.public_subnets_ids
+}
+
+
 output "vpc_web_cidr_block" {
   description = "Main CIDR block of vpc web"
   value       = module.vpc_web.vpc_cidr_blocks

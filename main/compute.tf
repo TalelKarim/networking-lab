@@ -60,7 +60,7 @@ module "compute_strongswan" {
   source        = "../modules/compute"
   name          = "strongswan"
   vpc_id        = module.network.vpc_onprem_id
-  subnet_ids    = module.network.vpc_onprem_private_subnets_ids
+  subnet_ids    = module.network.vpc_onprem_public_subnets_ids
   ami_id        = data.aws_ami.amzn2.id
   instance_type = var.general_instance_type
   count_per_az  = 1
