@@ -84,8 +84,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "assoc_vpn" {
 
 
 resource "aws_ec2_transit_gateway_route" "to_onprem" {
-  for_each                      = toset(module.vpc_onprem.vpc_cidr_blocks)
-  destination_cidr_block        = each.value
+  destination_cidr_block        = module.vpc_onprem.vpc_cidr_blocks
   transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.main.id
   transit_gateway_attachment_id  = var.vpn_tgw_attachement_id
 }
