@@ -1,3 +1,3 @@
 output "eip_openswan_static" {
-  value = aws_eip.openswan.address
+  value = aws_eip.openswan.public_ip
 }
