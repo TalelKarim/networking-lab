@@ -93,3 +93,5 @@ resource "aws_eip_association" "openswan_assoc" {
   instance_id   = aws_instance.openswan.id
   allocation_id = aws_eip.openswan.id
 }
+
+
