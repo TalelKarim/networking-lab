@@ -21,9 +21,3 @@ output "vpn_tunnel2_psk" {
 output "vpn_attachment_id" {
   value = aws_vpn_connection.onprem_to_tgw.transit_gateway_attachment_id
 }
-
-
-
-output "vpn_attachment_id" {
-  value = aws_vpn_connection.onprem_to_tgw.transit_gateway_attachment_id
-}
