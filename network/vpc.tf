@@ -144,8 +144,7 @@ module "vpc_onprem" {
   # tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.2.0/24", "10.0.4.0/24"]
   enable_nat_gateway         = false
   role                       = "Onprem-vpc"
-  tgw_attachment_dep        =  module.tgw_onprem_attachment.attachment_id
-
+tgw_attachment_dep = null
 }
 
 
