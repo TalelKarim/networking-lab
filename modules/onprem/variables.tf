@@ -3,3 +3,7 @@ variable "router_subnet_id" {}
 variable "ssh_allowed_cidrs" {
   default = ["0.0.0.0/0"]
 }
+
+variable "ami_id_strongswan" {
+  type = string
+}

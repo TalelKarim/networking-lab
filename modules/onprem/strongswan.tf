@@ -71,18 +71,10 @@ resource "aws_eip" "strongswan" {
 #########################################
 # Instance EC2 StrongSwan
 #########################################
-data "aws_ami" "amzn2" {
-  most_recent = true
-  owners      = ["amazon"]
 
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
-  }
-}
 
 resource "aws_instance" "strongswan" {
-  ami                         = data.aws_ami.amzn2.id
+  ami                         = var.ami_id_strongswan
   instance_type               = "t3.micro"
   subnet_id                   = var.router_subnet_id
   vpc_security_group_ids      = [aws_security_group.strongswan_sg.id]
