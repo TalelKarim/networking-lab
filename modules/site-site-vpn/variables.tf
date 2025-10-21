@@ -9,3 +9,8 @@ variable "onprem_bgp_asn" {
 variable "openswan_ip_address" {
   type = string
 }
+
+
+variable "transit_gateway_id" {
+  type = string
+}
