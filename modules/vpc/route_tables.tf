@@ -34,6 +34,8 @@ resource "aws_route" "private_to_tgw" {
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
 
+  depends_on = [var.tgw_attachment_dep]
+
   # optionnel : voir note "depends_on" plus bas
 }
 
@@ -87,5 +89,7 @@ resource "aws_route" "public_to_tgw" {
   route_table_id         = each.value.route_table_id
   destination_cidr_block = each.value.cidr_block
   transit_gateway_id     = var.transit_gateway_id
+
+  depends_on = [var.tgw_attachment_dep]
 
 }
