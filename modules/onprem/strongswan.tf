@@ -93,15 +93,3 @@ resource "aws_eip_association" "openswan_assoc" {
   instance_id   = aws_instance.openswan.id
   allocation_id = aws_eip.openswan.id
 }
-
-
-
-resource "aws_customer_gateway" "onprem" {
-  bgp_asn    = var.onprem_bgp_asn
-  ip_address = aws_eip.openswan.address    # EIP attachée plus tard à l'EC2
-  type       = "ipsec.1"
-
-  tags = {
-    Name = "cgw-onprem"
-  }
-}
