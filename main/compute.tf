@@ -55,10 +55,10 @@ module "compute_app" {
 }
 
 
-# # EC2 pour StrongSwan dans le VPC-Shared
-# module "compute_strongswan" {
+# # EC2 pour openswan dans le VPC-Shared
+# module "compute_openswan" {
 #   source        = "../modules/compute"
-#   name          = "strongswan"
+#   name          = "openswan"
 #   vpc_id        = module.network.vpc_onprem_id
 #   subnet_ids    = module.network.vpc_onprem_public_subnets_ids
 #   ami_id        = data.aws_ami.amzn2.id

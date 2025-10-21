@@ -14,7 +14,7 @@ variable "common_tags" {
 }
 
 # variable "onprem_public_ip" {
-#   description = "Adresse IP publique du strongSwan on-premise (pour le Customer Gateway)"
+#   description = "Adresse IP publique du openswan on-premise (pour le Customer Gateway)"
 #   type        = string
 # }
 
