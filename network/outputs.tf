@@ -10,6 +10,13 @@ output "vpc_app_id" {
 }
 
 
+
+output "transit_gateway_id" {
+  description = "The ID of the transit gateway"
+  value = module.tgw.transit_gateway_id
+}
+
+
 output "vpc_db_id" {
   description = "The ID of the Web Vpc"
   value       = module.vpc_db.vpc_id
