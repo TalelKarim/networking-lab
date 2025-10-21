@@ -27,7 +27,7 @@ resource "aws_security_group_rule" "allow_mysql_from_talel_laptop_lmn" {
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
-  cidr_blocks       = ["131.229.150.44/32"]  # autoriser tout le laptop de Talel
+  cidr_blocks       = ["131.229.150.44/32"] # autoriser tout le laptop de Talel
   security_group_id = aws_security_group.db_sg.id
   description       = "Allow MySQL traffic from Talel  Laptop"
 }

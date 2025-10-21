@@ -78,7 +78,7 @@ resource "aws_instance" "strongswan" {
   instance_type               = "t3.micro"
   subnet_id                   = var.router_subnet_id
   vpc_security_group_ids      = [aws_security_group.strongswan_sg.id]
-  associate_public_ip_address  = true  # nécessaire si le subnet est public
+  associate_public_ip_address = true  # nécessaire si le subnet est public
   source_dest_check           = false # autorise le routage VPN
 
   tags = {
