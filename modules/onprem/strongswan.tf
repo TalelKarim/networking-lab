@@ -98,7 +98,7 @@ resource "aws_eip_association" "openswan_assoc" {
 
 resource "aws_customer_gateway" "onprem" {
   bgp_asn    = var.onprem_bgp_asn
-  ip_address = aws_eip.openswan     # EIP attachée plus tard à l'EC2
+  ip_address = aws_eip.openswan.address    # EIP attachée plus tard à l'EC2
   type       = "ipsec.1"
 
   tags = {
