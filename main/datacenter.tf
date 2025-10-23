@@ -7,4 +7,6 @@ module "datacenter" {
   vpc_app_cidr             = module.network.vpc_app_cidr_block
   vpc_shared_cidr          = module.network.vpc_shared_cidr_block
   onprem_private_subnet_id = module.network.vpc_onprem_private_subnets_ids[0]
+  cidrs_to_aws             = [module.network.vpc_web_cidr_block, module.network.vpc_app_cidr_block, module.network.vpc_shared_cidr_block]
+  onprem_private_rt_id     = module.network.lan_private_route_table_ids[0]
 }

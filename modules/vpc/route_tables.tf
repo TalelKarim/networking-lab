@@ -93,3 +93,9 @@ resource "aws_route" "public_to_tgw" {
   depends_on = [var.tgw_attachment_dep]
 
 }
+
+
+
+
+
+

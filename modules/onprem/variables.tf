@@ -26,3 +26,12 @@ variable "onprem_bgp_asn" {
 
 
 
+variable "cidrs_to_aws" {
+  type = list(string)
+}
+
+
+variable "onprem_private_rt_id" {
+  type = string
+}
+

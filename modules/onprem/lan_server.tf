@@ -45,7 +45,7 @@ resource "aws_security_group" "onprem_test_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks =["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 
@@ -98,4 +98,14 @@ resource "aws_instance" "lan_server_vm" {
     Name = "lan-server-vm"
     Role = "onprem-lan"
   }
+}
+
+
+
+resource "aws_route" "onprem_private_to_vpn" {
+  for_each               = toset(var.cidrs_to_aws)
+  route_table_id         = var.onprem_private_rt_id
+  destination_cidr_block = each.value
+  instance_id            = aws_instance.openswan.id
+  depends_on             = [aws_instance.vpn_gw]
 }

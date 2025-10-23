@@ -31,3 +31,8 @@ output "intra_subnets_ids" {
 
 }
 
+
+output "private_route_table_ids" {
+  description = "The id of the private route table of vpc "
+  value       = module.vpc.private_route_table_ids
+}
