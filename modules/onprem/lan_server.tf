@@ -36,7 +36,7 @@ resource "aws_security_group" "onprem_test_sg" {
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = [var.vpc_db_cidr]
+    cidr_blocks = [var.vpc_shared_cidr]
   }
 
   # SSH d’admin (depuis ton IP ou un bastion)
@@ -54,7 +54,7 @@ resource "aws_security_group" "onprem_test_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_web_cidr, var.vpc_app_cidr, var.vpc_db_cidr]
+    cidr_blocks = [var.vpc_web_cidr, var.vpc_app_cidr, var.vpc_shared_cidr]
   }
 
   egress {

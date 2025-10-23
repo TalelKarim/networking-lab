@@ -81,3 +81,8 @@ output "vpc_app_cidr_block" {
   description = "Main CIDR block of vpc web"
   value       = module.vpc_app.vpc_cidr_blocks
 }
+
+output "vpc_shared_cidr_block" {
+  description = "Main CIDR block of vpc shared"
+  value       = module.vpc_shared.vpc_cidr_blocks
+}
