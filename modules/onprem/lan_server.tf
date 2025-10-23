@@ -106,6 +106,6 @@ resource "aws_route" "onprem_private_to_vpn" {
   for_each               = toset(var.cidrs_to_aws)
   route_table_id         = var.onprem_private_rt_id
   destination_cidr_block = each.value
-  instance_id            = aws_instance.openswan.id
-  depends_on             = [aws_instance.vpn_gw]
+  network_interface_id   = aws_instance.openswan.primary_network_interface_id
+  depends_on             = [aws_instance.openswan]
 }
