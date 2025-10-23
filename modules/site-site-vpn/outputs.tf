@@ -10,3 +10,7 @@ output "tunnel1_cgw_inside_ip" { value = aws_vpn_connection.onprem_to_tgw.tunnel
 output "tunnel1_tgw_inside_ip" { value = aws_vpn_connection.onprem_to_tgw.tunnel1_vgw_inside_address } # “vgw” = endpoint AWS
 output "tunnel2_cgw_inside_ip" { value = aws_vpn_connection.onprem_to_tgw.tunnel2_cgw_inside_address }
 output "tunnel2_tgw_inside_ip" { value = aws_vpn_connection.onprem_to_tgw.tunnel2_vgw_inside_address }
+
+output "vpn_attachment_id" {
+  value = aws_vpn_connection.onprem_to_tgw.transit_gateway_attachment_id
+}
