@@ -14,7 +14,7 @@ data "aws_ami" "amzn2" {
 resource "aws_security_group" "onprem_test_sg" {
   name        = "lan-server-sg"
   description = "SG pour la VM de test on-prem (LAN)"
-  vpc_id      = module.vpc_onprem.vpc_id
+  vpc_id      = var.vpc_id
 
   # ICMP depuis tes VPCs pour tester ping
   ingress {
