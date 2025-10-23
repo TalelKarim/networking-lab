@@ -36,11 +36,11 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "shared" {
 }
 
 
-resource "aws_ec2_transit_gateway_route_table_propagation" "vpn" {
-  # transit_gateway_attachment_id  = aws_vpn_connection.onprem_to_tgw.transit_gateway_attachment_id
-  transit_gateway_attachment_id = var.vpn_tgw_attachement_id
-  transit_gateway_route_table_id =aws_ec2_transit_gateway_route_table.main.id
-}
+# resource "aws_ec2_transit_gateway_route_table_propagation" "vpn" {
+#   # transit_gateway_attachment_id  = aws_vpn_connection.onprem_to_tgw.transit_gateway_attachment_id
+#   transit_gateway_attachment_id = var.vpn_tgw_attachement_id
+#   transit_gateway_route_table_id =aws_ec2_transit_gateway_route_table.main.id
+# }
 
 
 # Propagate your OnPrem VPC attachment’s CIDR into the TGW RT
