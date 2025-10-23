@@ -4,7 +4,7 @@ resource "aws_vpn_connection" "onprem_to_tgw" {
   type                = "ipsec.1"
 
   # Pas de BGP pour commencer : routes statiques côté TGW
-  static_routes_only  = true
+  static_routes_only = true
 
   # (optionnel) Tu peux imposer tes PSK si tu veux :
   # tunnel1_preshared_key = var.tunnel1_psk
