@@ -87,8 +87,10 @@ output "vpc_shared_cidr_block" {
   value       = module.vpc_shared.vpc_cidr_blocks
 }
 
-
-
+output "vpc_onprem_cidr_block" {
+  description = "Main CIDR block of vpc on prem"
+  value       = module.vpc_onprem.vpc_cidr_blocks
+}
 output "lan_private_route_table_ids" {
   value = module.vpc_onprem.private_route_table_ids
 }

@@ -17,14 +17,31 @@ variable "onprem_private_subnet_id" {
 }
 
 
+variable "vpc_onprem_cidr" {
+  type = string
+}
+
 variable "onprem_bgp_asn" {
   description = "ASN on-prem (si tu fais BGP plus tard). Statique => valeur arbitraire."
   type        = number
   default     = 65000
 }
 
+variable "tunn_1_outside_ip" {
+  type = string
+}
 
+variable "tunn_2_outside_ip" {
+  type = string
+}
 
+variable "tunn_1_psk" {
+  type = string
+}
+
+variable "tunn_2_psk" {
+
+}
 
 variable "cidrs_to_aws" {
   type = list(string)

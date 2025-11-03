@@ -9,4 +9,9 @@ module "datacenter" {
   onprem_private_subnet_id = module.network.vpc_onprem_private_subnets_ids[0]
   cidrs_to_aws             = [module.network.vpc_web_cidr_block, module.network.vpc_app_cidr_block, module.network.vpc_shared_cidr_block]
   onprem_private_rt_id     = module.network.lan_private_route_table_ids[0]
+  vpc_onprem_cidr          = module.network.vpc_onprem_cidr_block
+  tunn_1_outside_ip        = module.site_site_vpn.tunnel1_outside_ip
+  tunn_2_outside_ip        = module.site_site_vpn.tunnel2_outside_ip
+  tunn_1_psk               = module.site_site_vpn.tunnel1_psk
+  tunn_2_psk               = module.site_site_vpn.tunnel2_psk
 }
