@@ -1,9 +1,15 @@
+locals {
+  eic_subnet_ids = [module.vpc_app.private_subnets_ids[0], module.vpc_onprem.private_subnets_ids[0]]
+}
+
+
 resource "aws_ec2_instance_connect_endpoint" "eic" {
-  subnet_id          = module.vpc_app.private_subnets_ids[0] # subnet où placer l’ENI
+  for_each           = toset(local.eic_subnet_ids)
+  subnet_id          = each.value # subnet où placer l’ENI
   security_group_ids = [aws_security_group.eic_sg.id]
 
   tags = {
-    Name = "eic-${var.eic_name}-az-a"
+    Name = "eic-${var.eic_name}-${each.key}"
   }
 }
 
