@@ -40,7 +40,7 @@ resource "aws_security_group" "onprem_test_sg" {
   }
 
   ingress {
-    description = "ICMP depuis VPC DB"
+    description = "ICMP depuis VPC onprem"
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
