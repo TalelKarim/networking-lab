@@ -53,7 +53,7 @@ module "vpc_app" {
   ]
 
   transit_gateway_id         = module.tgw.transit_gateway_id
-  tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.4.0/24"]
+  tgw_destination_cidr_block = ["10.0.1.0/24", "10.0.3.0/24", "10.0.4.0/24", "10.255.0.0/24"]
   enable_nat_gateway         = true
   flow_log                   = true
   flow_log_group_name        = "/aws/vpc/vpc-app-flow-logs"
