@@ -39,6 +39,14 @@ resource "aws_security_group" "onprem_test_sg" {
     cidr_blocks = [var.vpc_shared_cidr]
   }
 
+  ingress {
+    description = "ICMP depuis VPC DB"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [var.vpc_onprem_cidr]
+  }
+
   # SSH d’admin (depuis ton IP ou un bastion)
   ingress {
     description = "SSH admin"
