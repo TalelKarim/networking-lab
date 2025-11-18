@@ -1,59 +1,55 @@
-# ############################################
-# # Entrées
-# ############################################
-# locals {
-#   eic_subnet_ids = [
-#     module.vpc_app.private_subnets_ids[0],
-#     module.vpc_onprem.private_subnets_ids[0],
-#   ]
-# }
+############################################
+# Entrées stables (clés connues au plan)
+############################################
+locals {
+  # Clés statiques -> valeurs (IDs peuvent être inconnus au plan)
+  eic_subnets = {
+    app    = module.vpc_app.private_subnets_ids[0]
+    onprem = module.vpc_onprem.private_subnets_ids[0]
+  }
+}
 
-# # Récupérer le VPC de chaque subnet
-# data "aws_subnet" "eic" {
-#   for_each = { for sid in local.eic_subnet_ids : sid => sid }
-#   id       = each.value
-# }
+############################################
+# Lookup des subnets (pour récupérer le VPC)
+############################################
+data "aws_subnet" "eic" {
+  for_each = local.eic_subnets   # clés stables: app, onprem
+  id       = each.value          # valeur = subnet id (peut être inconnue au plan)
+}
 
-# # Ensemble des VPC uniques correspondants aux subnets
-# locals {
-#   eic_vpc_ids = toset([for s in data.aws_subnet.eic : s.vpc_id])
-# }
+############################################
+# 1 Security Group par endpoint (par clé)
+############################################
+resource "aws_security_group" "eic_sg" {
+  for_each    = local.eic_subnets
 
-# ############################################
-# # SG par VPC (un SG pour chaque VPC touché)
-# ############################################
-# resource "aws_security_group" "eic_sg" {
-#   for_each    = { for id in local.eic_vpc_ids : id => id }
-#   name        = "eic-endpoint-sg-${each.key}"
-#   description = "Egress SSH from EIC endpoint to instances"
-#   vpc_id      = each.key
+  name        = "eic-endpoint-sg-${var.eic_name}-${each.key}"
+  description = "Egress SSH from EIC endpoint to instances"
+  vpc_id      = data.aws_subnet.eic[each.key].vpc_id
 
-#   # Pas d'ingress requis pour un endpoint EIC
-#   egress {
-#     from_port   = 22
-#     to_port     = 22
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"] # tu peux restreindre vers les CIDR de tes VPC
-#   }
+  # Pas d'ingress requis pour un EIC
+  egress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # ajuste si besoin
+  }
 
-#   tags = {
-#     Name = "eic-endpoint-sg-${each.key}"
-#   }
-# }
+  tags = {
+    Name = "eic-endpoint-sg-${var.eic_name}-${each.key}"
+  }
+}
 
-# ############################################
-# # EIC par subnet, associé au SG du bon VPC
-# ############################################
-# resource "aws_ec2_instance_connect_endpoint" "eic" {
-#   for_each  = { for sid in local.eic_subnet_ids : sid => sid }
-#   subnet_id = each.value
+############################################
+# 1 EIC par subnet, relié à son SG correspondant
+############################################
+resource "aws_ec2_instance_connect_endpoint" "eic" {
+  for_each  = local.eic_subnets
 
-#   # Prend le SG correspondant au VPC du subnet
-#   security_group_ids = [
-#     aws_security_group.eic_sg[data.aws_subnet.eic[each.key].vpc_id].id
-#   ]
+  subnet_id          = each.value
+  security_group_ids = [aws_security_group.eic_sg[each.key].id]
 
-#   tags = {
-#     Name = "eic-${var.eic_name}-${each.key}"
-#   }
-# }
+  tags = {
+    Name = "eic-${var.eic_name}-${each.key}"
+  }
+}
