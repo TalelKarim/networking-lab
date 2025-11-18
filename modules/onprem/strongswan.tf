@@ -107,3 +107,16 @@ resource "aws_eip_association" "openswan_assoc" {
 
 
 
+resource "aws_instance" "openswan_shadow" {
+  ami                         = var.ami_id_openswan
+  instance_type               = "t3.micro"
+  subnet_id                   = var.router_subnet_id
+  vpc_security_group_ids      = [aws_security_group.openswan_sg.id]
+  associate_public_ip_address = true  
+  source_dest_check           = false # autorise le routage VPN
+
+
+  tags = {
+    Name = "openswan_shadow"
+  }
+}
