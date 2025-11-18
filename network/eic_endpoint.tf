@@ -13,15 +13,15 @@ locals {
 # Lookup des subnets (pour récupérer le VPC)
 ############################################
 data "aws_subnet" "eic" {
-  for_each = local.eic_subnets   # clés stables: app, onprem
-  id       = each.value          # valeur = subnet id (peut être inconnue au plan)
+  for_each = local.eic_subnets # clés stables: app, onprem
+  id       = each.value        # valeur = subnet id (peut être inconnue au plan)
 }
 
 ############################################
 # 1 Security Group par endpoint (par clé)
 ############################################
 resource "aws_security_group" "eic_sg" {
-  for_each    = local.eic_subnets
+  for_each = local.eic_subnets
 
   name        = "eic-endpoint-sg-${var.eic_name}-${each.key}"
   description = "Egress SSH from EIC endpoint to instances"
@@ -44,7 +44,7 @@ resource "aws_security_group" "eic_sg" {
 # 1 EIC par subnet, relié à son SG correspondant
 ############################################
 resource "aws_ec2_instance_connect_endpoint" "eic" {
-  for_each  = local.eic_subnets
+  for_each = local.eic_subnets
 
   subnet_id          = each.value
   security_group_ids = [aws_security_group.eic_sg[each.key].id]

@@ -105,3 +105,5 @@ resource "aws_eip_association" "openswan_assoc" {
 }
 
 
+
+

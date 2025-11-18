@@ -57,6 +57,16 @@ resource "aws_security_group" "onprem_test_sg" {
   }
 
 
+
+  # ICMP depuis le SG d'OpenSwan
+  ingress {
+    description     = "ICMP from OpenSwan SG"
+    from_port       = -1
+    to_port         = -1
+    protocol        = "icmp"
+    security_groups = [aws_security_group.openswan_sg.id]
+  }
+
   ingress {
     description = "HTTP depuis VPCs"
     from_port   = 80
@@ -64,6 +74,8 @@ resource "aws_security_group" "onprem_test_sg" {
     protocol    = "tcp"
     cidr_blocks = [var.vpc_web_cidr, var.vpc_app_cidr, var.vpc_shared_cidr]
   }
+
+
 
   egress {
     description = "Sortie libre"
